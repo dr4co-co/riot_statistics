@@ -12,11 +12,17 @@ class LeagueOfLegendsApiConnection():
     def getRankedStats(self, summonerStats, region):
         return self.watcher.league.by_summoner(region, summonerStats['id'])
 
+    def getAmountOfWinsByGamemode(self, rankedStats, gamemode):
+        return int(rankedStats[gamemode]['wins'])
+
+    def getAmountOfLossesByGamemode(self, rankedStats, gamemode):
+        return int(rankedStats[gamemode]['losses'])
+
     def getAmountOfGamesByGamemode(self, rankedStats, gamemode):
-        return (int(rankedStats[gamemode]['wins']) + int(rankedStats[gamemode]['losses']))
+        return self.getAmountOfWinsByGamemode(rankedStats, gamemode) + self.getAmountOfLossesByGamemode(rankedStats, gamemode)
 
     def getWinrateByGamemode(self, rankedStats, gamemode):
         return (int(rankedStats[gamemode]['wins']) / self.getAmountOfGamesByGamemode(rankedStats, gamemode) * 100)
 
-    def getMatchList(self):
-        pass
+    def getMatchHistory(self, summonerStats, region):
+        return self.watcher.match.matchlist_by_account(region, summonerStats['accountId'])['matches']
