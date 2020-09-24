@@ -5,35 +5,37 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-def Main():
-    with open('../assets/api_key.txt', 'r') as file:
-        apiKey = file.read()
 
-    summonerName = 'Icathun Saijax'
+def main():
+    with open('../assets/api_key.txt', 'r') as file:
+        api_key = file.read()
+
+    summoner_name = 'Icathun Saijax'
     region = 'EUW1'
     gamemode = 1
 
-    api = LeagueOfLegendsApiConnection(apiKey)
+    api = LeagueOfLegendsApiConnection(api_key)
     print('SummonerStats')
-    sumStats = api.getSummonerStats(summonerName, region)
-    print(sumStats)
+    sum_stats = api.get_summoner_stats(summoner_name, region)
+    print(sum_stats)
     print('Rankedstats')
-    rankStats = api.getRankedStats(sumStats, region)
-    print(rankStats)
+    rank_stats = api.get_ranked_stats(sum_stats, region)
+    print(rank_stats)
     print('Wins')
-    wins = api.getAmountOfWinsByGamemode(rankStats, gamemode)
+    wins = api.get_amount_of_wins_by_gamemode(rank_stats, gamemode)
     print(wins)
     print('Losses')
-    losses = api.getAmountOfLossesByGamemode(rankStats, gamemode)
+    losses = api.get_amount_of_losses_by_gamemode(rank_stats, gamemode)
     print(losses)
     print('Total games')
-    totalGames = api.getAmountOfGamesByGamemode(rankStats, gamemode)
-    print(totalGames)
+    total_games = api.get_amount_of_games_by_gamemode(rank_stats, gamemode)
+    print(total_games)
     print('Winrate')
-    winrate = api.getWinrateByGamemode(rankStats, gamemode)
+    winrate = api.get_winrate_by_gamemode(rank_stats, gamemode)
     print(winrate)
     print('Matchhistory')
-    matchhistory = api.getMatchHistory(sumStats, region)
-    print(matchhistory)
+    match_history = api.get_match_history(sum_stats, region)
+    print(match_history)
 
-Main()
+
+main()

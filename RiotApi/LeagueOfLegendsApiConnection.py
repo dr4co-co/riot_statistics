@@ -2,27 +2,26 @@ from riotwatcher import LolWatcher, ApiError
 
 class LeagueOfLegendsApiConnection():
 
-    def __init__(self, apiKey):
-        self.apiKey = apiKey
-        self.watcher = LolWatcher(apiKey)
+    def __init__(self, api_key):
+        self.watcher = LolWatcher(api_key)
 
-    def getSummonerStats(self, summonerName, region):
-        return self.watcher.summoner.by_name(region, summonerName)
+    def get_summoner_stats(self, summoner_name, region):
+        return self.watcher.summoner.by_name(region, summoner_name)
 
-    def getRankedStats(self, summonerStats, region):
-        return self.watcher.league.by_summoner(region, summonerStats['id'])
+    def get_ranked_stats(self, summoner_stats, region):
+        return self.watcher.league.by_summoner(region, summoner_stats['id'])
 
-    def getAmountOfWinsByGamemode(self, rankedStats, gamemode):
-        return int(rankedStats[gamemode]['wins'])
+    def get_amount_of_wins_by_gamemode(self, ranked_stats, gamemode):
+        return int(ranked_stats[gamemode]['wins'])
 
-    def getAmountOfLossesByGamemode(self, rankedStats, gamemode):
-        return int(rankedStats[gamemode]['losses'])
+    def get_amount_of_losses_by_gamemode(self, ranked_stats, gamemode):
+        return int(ranked_stats[gamemode]['losses'])
 
-    def getAmountOfGamesByGamemode(self, rankedStats, gamemode):
-        return self.getAmountOfWinsByGamemode(rankedStats, gamemode) + self.getAmountOfLossesByGamemode(rankedStats, gamemode)
+    def get_amount_of_games_by_gamemode(self, ranked_stats, gamemode):
+        return self.get_amount_of_wins_by_gamemode(ranked_stats, gamemode) + self.get_amount_of_losses_by_gamemode(ranked_stats, gamemode)
 
-    def getWinrateByGamemode(self, rankedStats, gamemode):
-        return (int(rankedStats[gamemode]['wins']) / self.getAmountOfGamesByGamemode(rankedStats, gamemode) * 100)
+    def get_winrate_by_gamemode(self, ranked_stats, gamemode):
+        return int(ranked_stats[gamemode]['wins']) / self.get_amount_of_games_by_gamemode(ranked_stats, gamemode) * 100
 
-    def getMatchHistory(self, summonerStats, region):
-        return self.watcher.match.matchlist_by_account(region, summonerStats['accountId'])['matches']
+    def get_match_history(self, summoner_stats, region):
+        return self.watcher.match.matchlist_by_account(region, summoner_stats['accountId'])['matches']
