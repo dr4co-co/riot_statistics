@@ -36,6 +36,9 @@ def main():
     print('Matchhistory')
     match_history = api.get_match_history(sum_stats, region)
     print(match_history)
+    print('Champion Mastery')
+    champion_mastery = api.get_champ_mastery(sum_stats, region)
+    print(champion_mastery)
 
 
 main()
